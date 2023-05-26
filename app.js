@@ -31,7 +31,7 @@ app.post("/register/", async (request, response) => {
   const dbUser = await db.get(selectUserQuery);
   if (dbUser === undefined) {
       if(password.length<5){
-          response.status = 400;
+          response.status(400);
     response.send("Password is too short");
       }
       else{
@@ -52,8 +52,8 @@ app.post("/register/", async (request, response) => {
       }
     
   } else {
-    response.status = 400;
-    response.send("User already exists");
+    response.status(400);
+    response.send('User already exists');
   }
 });
 
@@ -96,7 +96,8 @@ app.put("/change-password",async(request,response)=>{
 SET
   password = '${hashedPassword}'
 WHERE
-  username = '${username};`
+  username = '${username}';`
+   await db.run(changePasswordQuery);
   response.status(200);
    response.send("Password updated");
            }
